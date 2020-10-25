@@ -24,7 +24,7 @@ while num_ephocs > 0:
         action = np.argmax(q_table[current_state]) #Search the row corresponding to the current state for the action that returns highest reward
     
     new_state, reward, is_done, _ = env.step(action) #Agent performing the chosen action and the returned information being stored in proper variables
-    q_table[current_state, action] = q_table[current_state, action] + alpha * (reward + (gamma * np.max(q_table[new_state, :] - q_table[current_state, action]))) #Update Q-table
+    q_table[current_state, action] = ((1 - alpha) * q_table[current_state, action]) + (alpha * (reward + (gamma * np.max(q_table[new_state, :])))) #Update Q-table
     
     if is_done: #Variable set to true when the action taken lead to a successful passenger drop-off
         num_ephocs -= 1 #Update the ephoc counter variable
